@@ -5,8 +5,8 @@ very hard:
 
 ```commandline
 $ git add -u
-$ gc
-$ gp
+$ git commit -v
+$ git push
 ```
 
 However, this is two commands two long. This should be in a singular command! This is why I once
