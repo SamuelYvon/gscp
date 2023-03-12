@@ -25,11 +25,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
-    - uses: abatilo/actions-poetry@v2
-      with:
-        manylinux: 2_17
-        target: x86_64
-        command: poetry build
     - uses: actions/setup-python@v4
       with:
         python-version: |
@@ -38,6 +33,11 @@ jobs:
           3.9
           3.10
           3.11
+    - uses: abatilo/actions-poetry@v2
+      with:
+        manylinux: 2_17
+        target: x86_64
+        command: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -110,9 +110,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: abatilo/actions-poetry@v2
-      with:
-        command: poetry build
     - uses: actions/setup-python@v4
       with:
         python-version: |
@@ -121,6 +118,9 @@ jobs:
           3.9
           3.10
           3.11
+    - uses: abatilo/actions-poetry@v2
+      with:
+        command: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -133,9 +133,6 @@ jobs:
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v3
-    - uses: abatilo/actions-poetry@v2
-      with:
-        command: poetry build
     - uses: actions/setup-python@v4
       with:
         python-version: |
@@ -144,6 +141,9 @@ jobs:
           3.9
           3.10
           3.11
+    - uses: abatilo/actions-poetry@v2
+      with:
+        command: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
