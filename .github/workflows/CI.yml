@@ -34,10 +34,8 @@ jobs:
           3.10
           3.11
     - uses: abatilo/actions-poetry@v2
-      with:
-        manylinux: 2_17
-        target: x86_64
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -54,10 +52,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: abatilo/actions-poetry@v2
-      with:
-        manylinux: 2_17
-        target: ${{ matrix.target }}
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -74,10 +70,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: abatilo/actions-poetry@v2
-      with:
-        manylinux: musllinux_1_1
-        target: ${{ matrix.target }}
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -94,10 +88,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: abatilo/actions-poetry@v2
-      with:
-        manylinux: 2_17
-        target: ${{ matrix.target }}
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -119,8 +111,8 @@ jobs:
           3.10
           3.11
     - uses: abatilo/actions-poetry@v2
-      with:
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
@@ -142,8 +134,8 @@ jobs:
           3.10
           3.11
     - uses: abatilo/actions-poetry@v2
-      with:
-        command: poetry build
+    - name: Build wheels
+      run: poetry build
     - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
