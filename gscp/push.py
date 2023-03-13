@@ -2,8 +2,8 @@ import subprocess
 
 from rich.prompt import Prompt
 
+from .wrappers import stderr_of_proc
 from .git import git_current_branch
-from .wrappers import stdout_of_proc
 
 _NO_UPSTREAM = "no upstream branch"
 
@@ -28,10 +28,10 @@ def push(force: bool = False) -> None:
         command.append("--force")
 
     result = subprocess.run(command, capture_output=True, check=False, timeout=10)
-    stdout = stdout_of_proc(result)
+    stderr = stderr_of_proc(result)
 
     if result.returncode:
-        no_upstream = _NO_UPSTREAM in stdout
+        no_upstream = _NO_UPSTREAM in stderr
 
         if no_upstream:
             branch_name = git_current_branch()
