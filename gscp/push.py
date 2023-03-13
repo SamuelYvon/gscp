@@ -2,8 +2,8 @@ import subprocess
 
 from rich.prompt import Prompt
 
-from .wrappers import stderr_of_proc
 from .git import git_current_branch
+from .wrappers import stderr_of_proc
 
 _NO_UPSTREAM = "no upstream branch"
 
