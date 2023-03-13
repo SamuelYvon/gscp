@@ -1,6 +1,6 @@
 import subprocess
 
-from rich.prompt import Prompt
+from rich.prompt import Confirm, Prompt
 
 from .git import git_current_branch
 from .wrappers import stderr_of_proc
@@ -19,6 +19,24 @@ def _push_upstream(branch: str, remote: str = "origin") -> None:
 
     command = ["git", "push", "--set-upstream", remote, branch]
     subprocess.run(command, capture_output=True, check=True, timeout=10)
+
+
+def _get_remote_name() -> str:
+    remote = ""
+
+    confirmed = False
+    while not confirmed:
+        remote = Prompt.ask("Please enter the remote name").strip()
+
+        if not len(remote):
+            print("Empty remote not allowed.")
+            continue
+
+        confirmed = Confirm.ask(f"Is '{remote}' the right remote?")
+
+    assert len(remote), "Programming error"
+
+    return remote
 
 
 def push(force: bool = False) -> None:
@@ -46,5 +64,4 @@ def push(force: bool = False) -> None:
             if confirmation == "y":
                 _push_upstream(branch_name)
             elif confirmation == "o":
-                remote = input("Please enter the remote name: ")
-                _push_upstream(branch_name, remote=remote)
+                _push_upstream(branch_name, remote=_get_remote_name())
