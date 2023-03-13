@@ -29,6 +29,14 @@ def _create_argparser() -> argparse.ArgumentParser:
         action="store_true",
         help="If we using git amend mode (warning, this triggers a force push)",
     )
+
+    parser.add_argument(
+        "-n",
+        "--no-verify",
+        action="store_true",
+        help="If we skip the pre-commit hooks for git-add"
+    )
+
     parser.add_argument(
         "-f", "--force", action="store_true", help="If we use `git push --force`"
     )
@@ -41,10 +49,11 @@ def main() -> None:
     args = parser.parse_args()
 
     message = args.message if args.message else ""
+    no_verify = cast(bool, args.no_verify)
     amend = cast(bool, args.amend)
     force = cast(bool, args.force)
 
-    stage()
+    stage(no_verify=no_verify)
     if commit(message, amend=amend):
         push(force=force or amend)
 
