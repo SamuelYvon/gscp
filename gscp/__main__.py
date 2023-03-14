@@ -34,7 +34,7 @@ def _create_argparser() -> argparse.ArgumentParser:
         "-n",
         "--no-verify",
         action="store_true",
-        help="If we skip the pre-commit hooks for git-add"
+        help="If we skip the pre-commit hooks for git-add",
     )
 
     parser.add_argument(
