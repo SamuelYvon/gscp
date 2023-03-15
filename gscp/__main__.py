@@ -53,8 +53,8 @@ def main() -> None:
     amend = cast(bool, args.amend)
     force = cast(bool, args.force)
 
-    stage(no_verify=no_verify)
-    if commit(message, amend=amend):
+    stage()
+    if commit(message, amend=amend, no_verify=no_verify):
         push(force=force or amend)
 
 
