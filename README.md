@@ -21,6 +21,12 @@ It would have been easy enough to have those features in my shell script, but pa
 the flags in shell seemed harder than it needs to be. Therefore, I created a python package.
 Yay python!
 
+## Installation
+
+```shell
+> pip install gscp
+```
+
 ## Requirements
 
 This is a rather simple script. It requires python 3.7 or higher. Because it uses git, you
