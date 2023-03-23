@@ -17,7 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
-    - uses: pre-commit/action@v3.0.0
+    - uses: abatilo/actions-poetry@v2
+    - name: Install and run pre-commit
+      run: poetry install --with dev --no-root && poetry run pre-commit run -a
 
   linux:
     name: Build Linux wheels
