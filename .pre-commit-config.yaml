@@ -5,34 +5,39 @@ repos:
       - id: check-case-conflict
       - id: check-ast
       - id: check-docstring-first
-      - id: check-case-conflict
       - id: check-merge-conflict
       - id: check-builtin-literals
-      - id: check-docstring-first
-      - id: check-merge-conflict
       - id: check-yaml
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
 
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.252
-    hooks:
-      - id: ruff
-
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.12.1
     hooks:
       - id: validate-pyproject
 
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
+  - repo: local
     hooks:
-      - id: black
+      - id: ruff
+        name: ruff
+        entry: ruff check . --fix
+        pass_filenames: false
+        language: system
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.0.1
+  - repo: local
     hooks:
-    -   id: mypy
-        additional_dependencies: [nox]
+      - id: system
+        name: mypy
+        entry: mypy .
+        pass_filenames: false
+        language: system
+
+  - repo: local
+    hooks:
+      - id: system
+        name: black
+        entry: black .
+        pass_filenames: false
+        language: system
