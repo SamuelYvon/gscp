@@ -9,10 +9,22 @@ from typing import cast
 from .commit import commit
 from .push import push
 from .stage import stage
+from .version import ApplicationVersion
 
 
 def _create_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "-cp",
+        "--commit-push",
+        action="store_true",
+        help="Skip the push stage part; take what is already staged.",
+    )
+
+    parser.add_argument(
+        "--version", action="version", version=f"gscp {ApplicationVersion.parse()}"
+    )
 
     parser.add_argument(
         "message",
@@ -48,12 +60,15 @@ def main() -> None:
     parser = _create_argparser()
     args = parser.parse_args()
 
+    commit_under_push_only = cast(bool, args.commit_push)
     message = args.message if args.message else ""
     no_verify = cast(bool, args.no_verify)
     amend = cast(bool, args.amend)
     force = cast(bool, args.force)
 
-    stage()
+    if not commit_under_push_only:
+        stage()
+
     if commit(message, amend=amend, no_verify=no_verify):
         push(force=force or amend)
 
