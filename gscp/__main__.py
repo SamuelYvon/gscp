@@ -19,7 +19,7 @@ def _create_argparser() -> argparse.ArgumentParser:
         "-cp",
         "--commit-push",
         action="store_true",
-        help="Skip the push stage part; take what is already staged.",
+        help="Skip the stage part; take what is already staged.",
     )
 
     parser.add_argument(
@@ -60,13 +60,13 @@ def main() -> None:
     parser = _create_argparser()
     args = parser.parse_args()
 
-    commit_under_push_only = cast(bool, args.commit_push)
+    commit_push_only = cast(bool, args.commit_push)
     message = args.message if args.message else ""
     no_verify = cast(bool, args.no_verify)
     amend = cast(bool, args.amend)
     force = cast(bool, args.force)
 
-    if not commit_under_push_only:
+    if not commit_push_only:
         stage()
 
     if commit(message, amend=amend, no_verify=no_verify):
