@@ -22,15 +22,15 @@ class ApplicationVersion:
     build: Optional[str]
 
     @staticmethod
-    def parse(version=__version__):
+    def parse(version_str: str = __version__) -> "ApplicationVersion":
         # Because of the stupid docker tags, we have to support minuses as `+`. So...
         splat_on: str
-        if "-" in version:
+        if "-" in version_str:
             splat_on = "-"
         else:
             splat_on = "+"
 
-        splat = version.split(splat_on)
+        splat = version_str.split(splat_on)
 
         if len(splat) > 1:
             build = splat[-1]
@@ -48,6 +48,6 @@ class ApplicationVersion:
 
         return version
 
-    def __str__(self):
+    def __str__(self) -> str:
         build = f"+{self.build}" if self.build is not None else ""
         return f"{self.major}.{self.minor}.{self.patch}{build}"
