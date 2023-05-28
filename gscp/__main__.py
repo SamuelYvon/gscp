@@ -6,10 +6,13 @@ Samuel Yvon <samuelyvon9@gmail.com>
 import argparse
 from typing import cast
 
-from .commit import commit
-from .push import push
-from .stage import stage
-from .version import ApplicationVersion
+from rich.console import Console
+
+from gscp.commit import commit
+from gscp.git import git_is_in_repo
+from gscp.push import push
+from gscp.stage import stage
+from gscp.version import ApplicationVersion
 
 
 def _create_argparser() -> argparse.ArgumentParser:
@@ -57,6 +60,13 @@ def _create_argparser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    console = Console()
+    in_repo = git_is_in_repo()
+
+    if not in_repo:
+        console.print("You are not in a git repository", style="bold red")
+        exit(1)
+
     parser = _create_argparser()
     args = parser.parse_args()
 
@@ -67,9 +77,9 @@ def main() -> None:
     force = cast(bool, args.force)
 
     if not commit_push_only:
-        stage()
+        stage(console)
 
-    if commit(message, amend=amend, no_verify=no_verify):
+    if commit(message, amend=amend, no_verify=no_verify, console=console):
         push(force=force or amend)
 
 

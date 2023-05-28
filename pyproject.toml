@@ -1,22 +1,23 @@
 [tool.poetry]
 name = "gscp"
-version = "1.0.4"
+version = "1.0.5"
 description = "A tool to quickly commit your work with git."
 authors = ["Samuel Yvon <samuelyvon9@gmail.com>"]
 readme = "README.md"
-packages = [{include = "gscp"}]
+packages = [{ include = "gscp" }]
 
 [tool.poetry.dependencies]
 rich = "^13.3.2"
 python = "^3.8"
+ptyprocess = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
-black="^23.1.0"
-mypy="^1.0.0"
-isort="^5.10.1"
-ruff="^0.0.254"
-pre-commit="^3.1.1"
-types-setuptools="^67.6.0.5"
+black = "^23.1.0"
+mypy = "^1.0.0"
+isort = "^5.10.1"
+ruff = "^0.0.254"
+pre-commit = "^3.1.1"
+types-setuptools = "^67.6.0.5"
 
 [tool.poetry.scripts]
 gscp = "gscp.entry:entry"
@@ -27,20 +28,20 @@ target-version = ["py311", "py310", "py39", "py38", "py37"]
 [tool.mypy]
 python_version = "3.10"
 exclude = ['venv/.*/*\.py$']
-strict=true
+strict = true
 
 [tool.ruff]
 src = ["gscp"]
 target-version = "py37"
 select = [
-  "B", # flake8-bugbear
-  "C4", # flake8-comprehensions
-  "E", # pycodestyle
-  "F", # pyflakes
-  "W", # pycodestyle
-  "RUF", # ruff
-  "I", # isort
-  "PT",   # flake8-pytest-style
+    "B", # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "E", # pycodestyle
+    "F", # pyflakes
+    "W", # pycodestyle
+    "RUF", # ruff
+    "I", # isort
+    "PT", # flake8-pytest-style
 ]
 
 [build-system]

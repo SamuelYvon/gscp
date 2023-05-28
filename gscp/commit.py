@@ -1,3 +1,4 @@
+from rich.console import Console
 from rich.prompt import Confirm
 
 from .wrappers import cmd_run_in_pty
@@ -6,7 +7,7 @@ _COMMIT_BASE_COMMAND = ["git", "commit", "-v"]
 
 
 def _commit_with_message(
-    message: str, amend: bool = False, no_verify: bool = False
+    message: str, *, console: Console, amend: bool = False, no_verify: bool = False
 ) -> bool:
     cmd = [*_COMMIT_BASE_COMMAND, "-m", message]
 
@@ -27,7 +28,9 @@ def _commit_with_message(
     return 0 == cmd_run_in_pty(*cmd)[0]
 
 
-def _commit_without_message(amend: bool = False, no_verify: bool = False) -> bool:
+def _commit_without_message(
+    *, console: Console, amend: bool = False, no_verify: bool = False
+) -> bool:
     cmd = [*_COMMIT_BASE_COMMAND]
 
     if amend:
@@ -39,8 +42,14 @@ def _commit_without_message(amend: bool = False, no_verify: bool = False) -> boo
     return 0 == cmd_run_in_pty(*cmd)[0]
 
 
-def commit(message: str, amend: bool = False, no_verify: bool = False) -> bool:
+def commit(
+    message: str, *, console: Console, amend: bool = False, no_verify: bool = False
+) -> bool:
     if message:
-        return _commit_with_message(message, amend=amend, no_verify=no_verify)
+        return _commit_with_message(
+            message, console=console, amend=amend, no_verify=no_verify
+        )
     else:
-        return _commit_without_message(amend=amend, no_verify=no_verify)
+        return _commit_without_message(
+            console=console, amend=amend, no_verify=no_verify
+        )
