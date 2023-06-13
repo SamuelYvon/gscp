@@ -6,6 +6,7 @@ from .git import git_current_branch
 from .wrappers import stderr_of_proc
 
 _NO_UPSTREAM = "no upstream branch"
+_REMOTE_WORK = "remote contains work"
 
 
 def _push_upstream(branch: str, remote: str = "origin") -> None:
@@ -39,6 +40,11 @@ def _get_remote_name() -> str:
     return remote
 
 
+def pull() -> None:
+    command = ["git", "pull"]
+    subprocess.run(command, capture_output=True, check=False, timeout=10)
+
+
 def push(force: bool = False) -> None:
     command = ["git", "push"]
 
@@ -50,6 +56,7 @@ def push(force: bool = False) -> None:
 
     if result.returncode:
         no_upstream = _NO_UPSTREAM in stderr
+        remote_work = _REMOTE_WORK in stderr
 
         if no_upstream:
             branch_name = git_current_branch()
@@ -65,3 +72,13 @@ def push(force: bool = False) -> None:
                 _push_upstream(branch_name)
             elif confirmation == "o":
                 _push_upstream(branch_name, remote=_get_remote_name())
+        elif remote_work:
+            confirmation = Prompt.ask(
+                "It seems the remote branch contains work unmerged with the current branch. "
+                "Do you want to pull?",
+                choices=["y", "n"],
+                default="y",
+            )
+
+            if confirmation == "y":
+                pull()
