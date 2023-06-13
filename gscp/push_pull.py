@@ -74,8 +74,8 @@ def push(force: bool = False) -> None:
                 _push_upstream(branch_name, remote=_get_remote_name())
         elif remote_work:
             confirmation = Prompt.ask(
-                "It seems the remote branch contains work unmerged with the current branch. "
-                "Do you want to pull?",
+                "It seems the remote branch contains work unmerged with the"
+                " current branch. Do you want to pull?",
                 choices=["y", "n"],
                 default="y",
             )
