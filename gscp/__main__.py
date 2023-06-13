@@ -10,7 +10,7 @@ from rich.console import Console
 
 from gscp.commit import commit
 from gscp.git import git_is_in_repo
-from gscp.push import push
+from gscp.push_pull import push
 from gscp.stage import stage
 from gscp.version import ApplicationVersion
 

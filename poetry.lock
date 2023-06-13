@@ -304,17 +304,6 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
-name = "ptyprocess"
-version = "0.7.0"
-description = "Run a subprocess in a pseudo terminal"
-optional = false
-python-versions = "*"
-files = [
-    {file = "ptyprocess-0.7.0-py2.py3-none-any.whl", hash = "sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35"},
-    {file = "ptyprocess-0.7.0.tar.gz", hash = "sha256:5c5d0a3b48ceee0b48485e0c26037c0acd7d29765ca3fbb5cb3831d347423220"},
-]
-
-[[package]]
 name = "pygments"
 version = "2.15.1"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -494,4 +483,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.3)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "faba8d2c60e20429e49d0c3b7d349fc74d43925b487839f648f727722bcda490"
+content-hash = "545aed99dcccbfdba8b6e8f31298dafdf4e93de3f9ae2ce5a3f8bd1523d1e736"
