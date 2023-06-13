@@ -40,7 +40,7 @@ def _get_remote_name() -> str:
     return remote
 
 
-def pull() -> subprocess.CompletedProcess:
+def pull() -> subprocess.CompletedProcess[bytes]:
     command = ["git", "pull"]
     result = subprocess.run(command, capture_output=True, check=False, timeout=10)
     return result
