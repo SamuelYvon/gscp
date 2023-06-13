@@ -40,9 +40,10 @@ def _get_remote_name() -> str:
     return remote
 
 
-def pull() -> None:
+def pull() -> subprocess.CompletedProcess:
     command = ["git", "pull"]
-    subprocess.run(command, capture_output=True, check=False, timeout=10)
+    result = subprocess.run(command, capture_output=True, check=False, timeout=10)
+    return result
 
 
 def push(force: bool = False) -> None:
@@ -81,4 +82,6 @@ def push(force: bool = False) -> None:
             )
 
             if confirmation == "y":
-                pull()
+                # We pull (fast-forward or not, we need to push)
+                _ = pull()
+                push()
