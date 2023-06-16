@@ -61,11 +61,6 @@ def _create_argparser() -> argparse.ArgumentParser:
 
 def main() -> None:
     console = Console()
-    in_repo = git_is_in_repo()
-
-    if not in_repo:
-        console.print("You are not in a git repository", style="bold red")
-        exit(1)
 
     parser = _create_argparser()
     args = parser.parse_args()
@@ -75,6 +70,10 @@ def main() -> None:
     no_verify = cast(bool, args.no_verify)
     amend = cast(bool, args.amend)
     force = cast(bool, args.force)
+
+    if not git_is_in_repo():
+        console.print("You are not in a git repository", style="bold red")
+        exit(1)
 
     if not commit_push_only:
         stage(console)
