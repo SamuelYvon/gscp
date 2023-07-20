@@ -8,7 +8,7 @@ from typing import cast
 
 from rich.console import Console
 
-from gscp.commit import commit
+from gscp.commit import commit, pre_commit
 from gscp.git import git_is_in_repo
 from gscp.push_pull import push
 from gscp.stage import stage
@@ -39,6 +39,13 @@ def _create_argparser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "-pre",
+        action="store_true",
+        help="Performs a pre-commit check before making the actual commit."
+        " Uses the git pre-commit hook.",
+    )
+
+    parser.add_argument(
         "-a",
         "--amend",
         action="store_true",
@@ -65,6 +72,7 @@ def main() -> None:
     parser = _create_argparser()
     args = parser.parse_args()
 
+    pre = cast(bool, args.pre)
     commit_push_only = cast(bool, args.commit_push)
     message = args.message if args.message else ""
     no_verify = cast(bool, args.no_verify)
@@ -74,6 +82,16 @@ def main() -> None:
     if not git_is_in_repo():
         console.print("You are not in a git repository", style="bold red")
         exit(1)
+
+    if pre:
+        pre_commit_result = pre_commit()
+
+        if isinstance(pre_commit_result, str):
+            print(pre_commit_result)
+            console.print(
+                "Pre-commit script failed. Fix errors then try again.", style="bold red"
+            )
+            exit(1)
 
     if not commit_push_only:
         stage(console)
