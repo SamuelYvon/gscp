@@ -9,6 +9,13 @@ _NO_UPSTREAM = "no upstream branch"
 _REMOTE_WORK = "remote contains work"
 
 
+def _extract_remote_output(text: str) -> str:
+    lines = [
+        line for line in text.splitlines(keepends=True) if line.startswith("remote:")
+    ]
+    return "".join(lines)
+
+
 def _push_upstream(branch: str, remote: str = "origin") -> None:
     """
     Push by setting the upstream branch
@@ -19,7 +26,11 @@ def _push_upstream(branch: str, remote: str = "origin") -> None:
     """
 
     command = ["git", "push", "--set-upstream", remote, branch]
-    subprocess.run(command, capture_output=True, check=True, timeout=10)
+    result = subprocess.run(
+        command, capture_output=True, text=True, check=True, timeout=10
+    )
+    remote_output = _extract_remote_output(result.stderr)
+    print(remote_output, end="")
 
 
 def _get_remote_name() -> str:
