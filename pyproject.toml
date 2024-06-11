@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gscp"
-version = "1.0.9"
+version = "1.0.10"
 description = "A tool to quickly commit your work with git."
 authors = ["Samuel Yvon <samuelyvon9@gmail.com>"]
 readme = "README.md"
@@ -11,7 +11,7 @@ rich = "^13.3.2"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
-black = "^23.1.0"
+black = "^24.3.0"
 mypy = "^1.0.0"
 isort = "^5.10.1"
 ruff = "^0.0.254"
